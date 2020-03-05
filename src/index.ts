@@ -1,0 +1,1 @@
+export { PRNG } from './prng'

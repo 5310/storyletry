@@ -10,6 +10,13 @@
       true,
       "single",
       "jsx-double"
+    ],
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore",
+      "allow-trailing-underscore"
     ]
   }
 }
