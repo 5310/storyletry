@@ -1,4 +1,4 @@
-import Randoma from 'randoma'
+import * as Randoma from 'randoma'
 
 export type weightedDist = {
   weight: number
