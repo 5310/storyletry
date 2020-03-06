@@ -1,5 +1,5 @@
-import ParkMiller from 'park-miller'
 import hash from '@sindresorhus/string-hash'
+import ParkMiller from 'park-miller'
 
 export type weightedSample = {
   weight: number
@@ -26,6 +26,10 @@ export class PRNG {
 
   integer(min: number, max: number): number {
     return this.#prng.integerInRange(min, max)
+  }
+
+  boolean(p: number = 0.5) {
+    return this.unit() < p
   }
 
   pick(array: []) {
