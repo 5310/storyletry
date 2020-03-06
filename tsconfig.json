@@ -3,6 +3,7 @@
     "target": "es2020",
     "module": "esnext",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "plugins": [
       {
