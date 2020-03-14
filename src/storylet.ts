@@ -10,25 +10,23 @@ export type Reading<Content> = {
   content: Content[],
   interrupt?: Choice<Content> | boolean,
 }
-type Choice<Content> = {
-  path: number[],
-  choices: {
-    slug: Content,
-    choice: number,
-  }[],
+export type Choice<Content> = {
+  slug: Content,
+  choice: number,
 }
-type Test<Content> = (context: Context<Content>) => number
-type Read<Content> = (context: Context<Content>) => Reading<Content>
+export type Test<Content> = (context: Context<Content>) => number
+export type Read<Content> = (context: Context<Content>) => Reading<Content>
 
-export class Storylet<Content> {
-  readonly #read: Reading<Content>
-  constructor(test: Test<Content>, read: Reading<Content>) {
-    this.test = test
-    this.#read = read
-  }
+export default class Storylet<Content> {
   test: Test<Content>
-  read(context: Context<Content>): Reading<Content> {
-    if (this.test(context) <= 0) throw new Error('Storylet fails its test and cannot be read')
+  read: Read<Content>
+
+  constructor(test: Test<Content>, read: Read<Content>) {
+    this.test = test
+    this.read = read
+  }
+
+  static create<Content>(test: number | Test<Content>, read: Content | Content[] | Read<Content>) {
     return
   }
 }
