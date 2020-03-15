@@ -1,5 +1,4 @@
-import hash from '@sindresorhus/string-hash'
-import ParkMiller from 'park-miller'
+import Prando from 'prando'
 
 export type weightedSample = {
   weight: number
@@ -9,23 +8,23 @@ export type weightedSample = {
 export class PRNG {
 
   readonly seed: string
-  #prng: ParkMiller
+  #prng: Prando
 
   constructor(seed: string) {
     this.seed = seed
-    this.#prng = new ParkMiller(hash(seed))
+    this.#prng = new Prando(seed)
   }
 
   unit(): number {
-    return this.#prng.float()
+    return this.#prng.next()
   }
 
   number(min: number, max: number): number {
-    return this.#prng.floatInRange(min, max)
+    return this.#prng.next(min, max)
   }
 
   integer(min: number, max: number): number {
-    return this.#prng.integerInRange(min, max)
+    return this.#prng.nextInt(min, max)
   }
 
   boolean(p: number = 0.5) {
@@ -33,7 +32,7 @@ export class PRNG {
   }
 
   pick(array: []) {
-    return array[this.integer(0, array.length)]
+    return this.#prng.nextArrayItem(array)
   }
 
   shuffle(array: []) {

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "lint": "npx tslint -p .",
-    "build": "npm run lint && npx @pika/pack"
+    "build": "npx pika-pack"
   },
   "@pika/pack": {
     "pipeline": [
@@ -32,8 +32,6 @@
     "typescript-tslint-plugin": "^0.5.5"
   },
   "dependencies": {
-    "@sindresorhus/string-hash": "^1.2.0",
-    "park-miller": "^1.1.0",
-    "randoma": "^1.3.0"
+    "prando": "^5.1.2"
   }
 }
