@@ -27,15 +27,15 @@ export class PRNG {
     return this.#prng.nextInt(min, max)
   }
 
-  boolean(p: number = 0.5) {
+  boolean(p: number = 0.5): boolean {
     return this.unit() < p
   }
 
-  pick(array: []) {
+  pick(array: any[]): any {
     return this.#prng.nextArrayItem(array)
   }
 
-  shuffle(array: []) {
+  shuffle(array: any[]): any[] {
     const array_ = [...array]
     let length = array.length
     while (length) {
