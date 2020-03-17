@@ -1,8 +1,8 @@
 import Prando from 'prando'
 
 export type weightedSample = {
-  weight: number
-  value: weightedSample[] | any
+  readonly weight: number
+  readonly value: weightedSample[] | any
 }
 
 export class PRNG {

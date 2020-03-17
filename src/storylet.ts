@@ -1,35 +1,19 @@
-import { PRNG } from './prng'
+import { Story } from './story'
+import { Read } from './read'
+import { Test } from './test'
 
-export type Context = {
-  prng: PRNG,
-  state: object,
-  index: number[],
-  response: unknown,
-}
-export type Choice<Content> = {
-  slug: Content,
-  index: number,
-}
-export type End = 'END'
-export type Reading<Content, Question> = {
-  state: object,
-  story: Content[],
-  index?: number[],
-  request?: End | Choice<Content> | Question,
-}
-export type Test = (context: Context) => number
-export type Read<Content, Question> = (context: Context) => Reading<Content, Question>
+export class Storylet<Content, Interruption> implements Story<Content, Interruption> {
 
-export default class Storylet<Content, Question> {
-  test: Test
-  read: Read<Content, Question>
+  readonly read: Read<Content, Interruption>
+  readonly test: Test
 
-  constructor(test: Test, read: Read<Content, Question>) {
-    this.test = test
+  constructor(read: Read<Content, Interruption>, test: Test) {
     this.read = read
+    this.test = test
   }
 
-  static create<Content, Question>(test: number | Test, read: Content | Content[] | Read<Content, Question>) {
+  static create<Content, Interruption>(read: Content | Content[] | Read<Content, Interruption>, test: number | Test) {
     return
   }
+
 }
