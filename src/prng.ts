@@ -1,8 +1,8 @@
 import Prando from 'prando'
 
-export type weightedSample = {
+export type WeightedSample<T> = {
   readonly weight: number
-  readonly value: weightedSample[] | any
+  readonly value: WeightedSample<T>[] | T
 }
 
 export class PRNG {
@@ -31,11 +31,11 @@ export class PRNG {
     return this.unit() < p
   }
 
-  pick(array: any[]): any {
+  pick<T>(array: T[]): T {
     return this.#prng.nextArrayItem(array)
   }
 
-  shuffle(array: any[]): any[] {
+  shuffle<T>(array: T[]): T[] {
     const array_ = [...array]
     let length = array.length
     while (length) {
@@ -47,7 +47,7 @@ export class PRNG {
     return array_
   }
 
-  pickWeighted(dist: weightedSample[]): any {
+  pickWeighted<T>(dist: WeightedSample<T>[]): any {
     let totalWeight = 0
     for (const sample of dist) {
       if (sample.weight <= 0) throw new Error('Weight cannot be negative.')

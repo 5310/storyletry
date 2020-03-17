@@ -4,12 +4,17 @@ import { Reading } from './reading'
 import { Test } from './test'
 import { END } from './end'
 
+type StoryletRandom<Content, Interruption> = {
+  weight: number,
+  storylet: Storylet<Content, Interruption>,
+}
+
 export class StoryletterRandom<Content, Interruption> implements Storylet<Content, Interruption> {
 
-  readonly substorylets: Storylet<Content, Interruption>[]
+  readonly substorylets: StoryletRandom<Content, Interruption>[]
   readonly test: Test
 
-  constructor(substorylets: Storylet<Content, Interruption>[], test: Test) {
+  constructor(substorylets: StoryletRandom<Content, Interruption>[], test: Test) {
     this.substorylets = substorylets
     this.test = test
   }
@@ -18,7 +23,7 @@ export class StoryletterRandom<Content, Interruption> implements Storylet<Conten
 
     if (context.index.length > 0) { // delegate if needed
 
-      const reading = this.substorylets[context.index[0]].read({ ...context, index: context.index.slice(1) })
+      const reading = this.substorylets[context.index[0]].storylet.read({ ...context, index: context.index.slice(1) })
 
       // if delegate wants to end, recurse
       if (reading.request === END) return this.read({
@@ -37,21 +42,42 @@ export class StoryletterRandom<Content, Interruption> implements Storylet<Conten
       }
 
     } else { // else, "read" yourself
-      const options = context.prng.shuffle(this.substorylets)
-      for (let i = 0; i < this.substorylets.length; i++) { // annoyingly, for of returns strings and you can't cast them
-        if (this.substorylets[i].test(context) > 0) {
+
+      if (context.response === undefined) { // if there's no response of tested substorylets, provide it
+        return this.read({
+          ...context,
+          response: [],
+        })
+      } else { // else, get on with it
+
+        const options = this.substorylets
+          .map(({ weight }, i) => ({ weight, value: i }))
+          .filter(({ value }) => !(context.response as number[]).includes(value))
+
+        const choice = context.prng.pickWeighted(options)
+        const option = this.substorylets[choice].storylet
+        if (option.test(context) > 0) { // if picked substorylet is valid, delegate
           return this.read({
             ...context,
-            index: [i],
+            index: [choice],
             response: undefined,
           })
-        } // annoyingly, for of returns strings and you can't cast them
+        } else { // else, recurse with it checked out
+          return this.read({
+            ...context,
+            index: [],
+            response: [...context.response as number[], choice],
+          })
+        }
+
       }
+
     }
   }
 
-  // static create<Content, Interruption>(substorylets: Storylet<Content, Interruption>[], test: number | Test) {
-  //   return
-  // }
+  static create<Content, Interruption>(substorylets: StoryletRandom<Content, Interruption>[], test: number | Test) {
+    // TODO: guard overloaded factory functions
+    return
+  }
 
 }
