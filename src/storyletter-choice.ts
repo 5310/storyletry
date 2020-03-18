@@ -1,8 +1,4 @@
-import { Storylet } from './storylet'
-import { Context } from './context'
-import { Reading } from './reading'
-import { Test } from './test'
-import { END } from './end'
+import { Storylet, Context, Reading, Test, makeTest, END } from './storylet'
 
 export type StoryletChoice<Content, Interruption> = {
   slug: (context: Context<Content>) => Content,
@@ -11,11 +7,11 @@ export type StoryletChoice<Content, Interruption> = {
 
 export class StoryletterChoice<Content, Interruption> implements Storylet<Content, Interruption> {
 
-  readonly substorylets: StoryletChoice<Content, Interruption>[]
-  readonly test: Test
+  readonly story: StoryletChoice<Content, Interruption>[]
+  readonly test: Test<Content>
 
-  constructor(substorylets: StoryletChoice<Content, Interruption>[], test: Test) {
-    this.substorylets = substorylets
+  constructor(story: StoryletChoice<Content, Interruption>[], test: Test<Content>) {
+    this.story = story
     this.test = test
   }
 
@@ -23,7 +19,7 @@ export class StoryletterChoice<Content, Interruption> implements Storylet<Conten
 
     if (context.index.length > 0) { // delegate if needed
 
-      const reading = this.substorylets[context.index[0]].storylet.read({ ...context, index: context.index.slice(1) })
+      const reading = this.story[context.index[0]].storylet.read({ ...context, index: context.index.slice(1) })
 
       // if delegate wants to end, recurse
       if (reading.request === END) return this.read({
@@ -49,7 +45,7 @@ export class StoryletterChoice<Content, Interruption> implements Storylet<Conten
 
       } else { // else, compile choices
 
-        const options = this.substorylets
+        const options = this.story
           .map(({ slug, storylet }, index) => ({ index, score: storylet.test(context), slug }))
         const maxScore = options.reduce((acc, { score }) => score > acc ? score : acc, 0)
         const choices = options // FIXME: Why can't I use Array.prototype.flatMap() in TypeScript?
@@ -68,8 +64,12 @@ export class StoryletterChoice<Content, Interruption> implements Storylet<Conten
     }
   }
 
-  // static create<Content, Interruption>(substorylets: StoryletChoice<Content, Interruption>[], test: number | Test) {
-  //   return
-  // }
+  static make<Content, Interruption>(story: StoryletChoice<Content, Interruption>[], test: Test<Content> | number) {
+    return new StoryletterChoice<Content, Interruption>(story, makeTest(test))
+  }
 
 }
+
+export const makeStoryletterRandom = StoryletterChoice.make
+
+export default makeStoryletterRandom

@@ -1,16 +1,12 @@
-import { Storylet } from './storylet'
-import { Context } from './context'
-import { Reading } from './reading'
-import { Test } from './test'
-import { END } from './end'
+import { Storylet, Context, Reading, Test, makeTest, END } from './storylet'
 
 export class StoryletterSequence<Content, Interruption> implements Storylet<Content, Interruption> {
 
-  readonly substorylets: Storylet<Content, Interruption>[]
-  readonly test: Test
+  readonly story: Storylet<Content, Interruption>[]
+  readonly test: Test<Content>
 
-  constructor(substorylets: Storylet<Content, Interruption>[], test: Test) {
-    this.substorylets = substorylets
+  constructor(story: Storylet<Content, Interruption>[], test: Test<Content>) {
+    this.story = story
     this.test = test
   }
 
@@ -18,7 +14,7 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
 
     if (context.index.length > 0) { // delegate if needed
 
-      const reading = this.substorylets[context.index[0]].read({ ...context, index: context.index.slice(1) })
+      const reading = this.story[context.index[0]].read({ ...context, index: context.index.slice(1) })
 
       // if delegate wants to end, recurse
       if (reading.request === END) return this.read({
@@ -40,7 +36,7 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
 
       if (context.response !== undefined) { // delegate if index persisted
         const index = context.response as number
-        if (index >= this.substorylets.length) {
+        if (index >= this.story.length) {
           return {
             state: context.state,
             story: context.story,
@@ -48,7 +44,7 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
             request: END,
           }
         } else {
-          const substorylet = this.substorylets[index]
+          const substorylet = this.story[index]
           if (substorylet.test(context) > 0) {
             return this.read({
               ...context,
@@ -72,8 +68,12 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
     }
   }
 
-  // static create<Content, Interruption>(substorylets: Storylet<Content, Interruption>[], test: number | Test) {
-  //   return
-  // }
+  static make<Content, Interruption>(story: Storylet<Content, Interruption>[], test: Test<Content> | number) {
+    return new StoryletterSequence<Content, Interruption>(story, makeTest(test))
+  }
 
 }
+
+export const makeStoryletterSequence = StoryletterSequence.make
+
+export default makeStoryletterSequence

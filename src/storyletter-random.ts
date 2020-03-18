@@ -1,8 +1,4 @@
-import { Storylet } from './storylet'
-import { Context } from './context'
-import { Reading } from './reading'
-import { Test } from './test'
-import { END } from './end'
+import { Storylet, Context, Reading, Test, makeTest, END } from './storylet'
 
 type StoryletRandom<Content, Interruption> = {
   weight: number,
@@ -11,11 +7,11 @@ type StoryletRandom<Content, Interruption> = {
 
 export class StoryletterRandom<Content, Interruption> implements Storylet<Content, Interruption> {
 
-  readonly substorylets: StoryletRandom<Content, Interruption>[]
-  readonly test: Test
+  readonly story: StoryletRandom<Content, Interruption>[]
+  readonly test: Test<Content>
 
-  constructor(substorylets: StoryletRandom<Content, Interruption>[], test: Test) {
-    this.substorylets = substorylets
+  constructor(story: StoryletRandom<Content, Interruption>[], test: Test<Content>) {
+    this.story = story
     this.test = test
   }
 
@@ -23,7 +19,7 @@ export class StoryletterRandom<Content, Interruption> implements Storylet<Conten
 
     if (context.index.length > 0) { // delegate if needed
 
-      const reading = this.substorylets[context.index[0]].storylet.read({ ...context, index: context.index.slice(1) })
+      const reading = this.story[context.index[0]].storylet.read({ ...context, index: context.index.slice(1) })
 
       // if delegate wants to end, recurse
       if (reading.request === END) return this.read({
@@ -43,31 +39,40 @@ export class StoryletterRandom<Content, Interruption> implements Storylet<Conten
 
     } else { // else, "read" yourself
 
-      if (context.response === undefined) { // if there's no response of tested substorylets, provide it
+      if (context.response === undefined) { // if there's no response with tested stories, provide it
         return this.read({
           ...context,
           response: [],
         })
       } else { // else, get on with it
 
-        const options = this.substorylets
+        const options = this.story
           .map(({ weight }, i) => ({ weight, value: i }))
           .filter(({ value }) => !(context.response as number[]).includes(value))
 
-        const choice = context.prng.pickWeighted(options)
-        const option = this.substorylets[choice].storylet
-        if (option.test(context) > 0) { // if picked substorylet is valid, delegate
-          return this.read({
-            ...context,
-            index: [choice],
-            response: undefined,
-          })
-        } else { // else, recurse with it checked out
-          return this.read({
-            ...context,
+        if (options.length === 0) { // if all possible options exhausted, give up
+          return {
+            state: context.state,
+            story: context.story,
             index: [],
-            response: [...context.response as number[], choice],
-          })
+            request: END,
+          }
+        } else { // else, continue to pick a random option
+          const choice = context.prng.pickWeighted(options)
+          const option = this.story[choice].storylet
+          if (option.test(context) > 0) { // if picked substorylet is valid, delegate
+            return this.read({
+              ...context,
+              index: [choice],
+              response: undefined,
+            })
+          } else { // else, recurse with it checked out
+            return this.read({
+              ...context,
+              index: [],
+              response: [...context.response as number[], choice],
+            })
+          }
         }
 
       }
@@ -75,9 +80,22 @@ export class StoryletterRandom<Content, Interruption> implements Storylet<Conten
     }
   }
 
-  static create<Content, Interruption>(substorylets: StoryletRandom<Content, Interruption>[], test: number | Test) {
-    // TODO: guard overloaded factory functions
-    return
+  static make<Content, Interruption>(
+    story: (StoryletRandom<Content, Interruption> | Storylet<Content, Interruption>)[],
+    test: Test<Content> | number
+  ) {
+    return new StoryletterRandom(
+      story
+        .map(s => 'weight' in s
+          ? s as StoryletRandom<Content, Interruption>
+          : { weight: 1, storylet: s as Storylet<Content, Interruption> }
+        ),
+      makeTest(test)
+    )
   }
 
 }
+
+export const makeStoryletterRandom = StoryletterRandom.make
+
+export default makeStoryletterRandom
