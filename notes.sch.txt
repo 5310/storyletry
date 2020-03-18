@@ -1,0 +1,51 @@
+* To-do
+
+  ? learn how to document Typescript types
+
+  ?*` prng
+    ! implementation
+    ? tests
+      ! preliminary tests
+      ? test all the generation methods
+    ? docs
+      ! preliminary docs
+      ? complete docs
+    ? readme
+
+  ?*` storylet
+    ! implementation
+    ? tests
+    ? docs
+    ? readme
+
+  ?*` storyletter-choice
+    ! implementation
+    ? tests
+    ? docs
+    ? readme
+
+  ?*` storyletter-sequence
+    ! implementation
+    ? tests
+    ? docs
+    ? readme
+
+  ?*` storyletter-random
+    ! implementation
+    ? tests
+    ? docs
+    ? readme
+
+  ?*` storyteller-console
+    ? implementation
+      ? figure out how to do input in the browser
+        ? perhaps a console emulator with a readline implementation
+      ? specific class
+        ? constructor
+        ? choice handler
+        ? question handler
+        ? persistence
+    ? tests
+    ? docs
+    ? readme
+  
