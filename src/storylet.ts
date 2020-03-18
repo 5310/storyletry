@@ -37,7 +37,7 @@ export class Storylet<Content, Interruption> {
     read: Read<Content, Interruption> | Content,
     test: Test<Content> | number
   ) {
-    this.read = typeof read === 'function' ? read as Read<Content, Interruption> : ({ state, story, index }) => ({
+    this.read = typeof read === 'function' ? read as Read<Content, Interruption> : ({ state, story }) => ({
       state,
       story: [...story, read],
       index: [],
