@@ -1,7 +1,11 @@
 * To-do
 
-  ? learn how to document Typescript types
-
+  * general
+    learn
+      ! tooling for Typescrip libraries
+      ! how to do monorepo
+      ? how to document Typescript types
+    
   ?*` prng
     ! implementation
     ? tests
@@ -50,6 +54,7 @@
     ? readme
   
   ?*` storyletry
+    This is the module collecting the essentials to get started with storyletry; @scio/storyletry
     ? collate module
     ? tests
     ? docs
