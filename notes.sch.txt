@@ -49,3 +49,9 @@
     ? docs
     ? readme
   
+  ?*` storyletry
+    ? collate module
+    ? tests
+    ? docs
+    ? readme
+    ? publish
