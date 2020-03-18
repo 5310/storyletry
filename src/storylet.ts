@@ -39,17 +39,16 @@ export type Test<Content> = (context: Context<Content>) => number
 export const makeTest = <Content>(test: Test<Content> | number): Test<Content> =>
   typeof test === 'number' ? () => test : test
 
-export type Storylet<Content, Interruption> = {
-  readonly read: Read<Content, Interruption>,
-  readonly test: Test<Content>,
-}
-export const makeStorylet =
-  <Content, Interruption>(
+export class Storylet<Content, Interruption> {
+  readonly read: Read<Content, Interruption>
+  readonly test: Test<Content>
+  constructor(
     read: Read<Content, Interruption> | Content,
     test: Test<Content> | number
-  ): Storylet<Content, Interruption> => ({
-    read: makeRead(read),
-    test: makeTest(test),
-  })
+  ) {
+    this.read = makeRead(read)
+    this.test = makeTest(test)
+  }
+}
 
-export default makeStorylet
+export default Storylet

@@ -10,9 +10,16 @@ export class StoryletterRandom<Content, Interruption> implements Storylet<Conten
   readonly story: StoryletRandom<Content, Interruption>[]
   readonly test: Test<Content>
 
-  constructor(story: StoryletRandom<Content, Interruption>[], test: Test<Content>) {
+  constructor(
+    story: (StoryletRandom<Content, Interruption> | Storylet<Content, Interruption>)[],
+    test: Test<Content> | number
+  ) {
     this.story = story
-    this.test = test
+      .map(s => 'weight' in s
+        ? s as StoryletRandom<Content, Interruption>
+        : { weight: 1, storylet: s as Storylet<Content, Interruption> }
+      )
+    this.test = makeTest(test)
   }
 
   read(context: Context<Content>): Reading<Content, Interruption> {
@@ -80,22 +87,6 @@ export class StoryletterRandom<Content, Interruption> implements Storylet<Conten
     }
   }
 
-  static make<Content, Interruption>(
-    story: (StoryletRandom<Content, Interruption> | Storylet<Content, Interruption>)[],
-    test: Test<Content> | number
-  ) {
-    return new StoryletterRandom(
-      story
-        .map(s => 'weight' in s
-          ? s as StoryletRandom<Content, Interruption>
-          : { weight: 1, storylet: s as Storylet<Content, Interruption> }
-        ),
-      makeTest(test)
-    )
-  }
-
 }
 
-export const makeStoryletterRandom = StoryletterRandom.make
-
-export default makeStoryletterRandom
+export default StoryletterRandom

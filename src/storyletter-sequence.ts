@@ -5,9 +5,9 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
   readonly story: Storylet<Content, Interruption>[]
   readonly test: Test<Content>
 
-  constructor(story: Storylet<Content, Interruption>[], test: Test<Content>) {
+  constructor(story: Storylet<Content, Interruption>[], test: Test<Content> | number) {
     this.story = story
-    this.test = test
+    this.test = makeTest(test)
   }
 
   read(context: Context<Content>): Reading<Content, Interruption> {
@@ -68,12 +68,6 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
     }
   }
 
-  static make<Content, Interruption>(story: Storylet<Content, Interruption>[], test: Test<Content> | number) {
-    return new StoryletterSequence<Content, Interruption>(story, makeTest(test))
-  }
-
 }
 
-export const makeStoryletterSequence = StoryletterSequence.make
-
-export default makeStoryletterSequence
+export default StoryletterSequence
