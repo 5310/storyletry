@@ -1,4 +1,4 @@
-import { Storylet, Context, Reading, Test, makeTest, END } from './storylet'
+import { Storylet, Context, Reading, Test, END } from './storylet'
 
 export class StoryletterSequence<Content, Interruption> implements Storylet<Content, Interruption> {
 
@@ -7,7 +7,7 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
 
   constructor(story: Storylet<Content, Interruption>[], test: Test<Content> | number) {
     this.story = story
-    this.test = makeTest(test)
+    this.test = typeof test === 'number' ? () => test : test
   }
 
   read(context: Context<Content>): Reading<Content, Interruption> {

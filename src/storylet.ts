@@ -27,17 +27,8 @@ export type Reading<Content, Interruption> = {
 }
 
 export type Read<Content, Interruption> = (context: Context<Content>) => Reading<Content, Interruption>
-export const makeRead = <Content, Interruption>(read: Read<Content, Interruption> | Content): Read<Content, Interruption> =>
-  typeof read === 'function' ? read as Read<Content, Interruption> : ({ state, story, index }) => ({
-    state,
-    story: [...story, read],
-    index: [],
-    request: END
-  })
 
 export type Test<Content> = (context: Context<Content>) => number
-export const makeTest = <Content>(test: Test<Content> | number): Test<Content> =>
-  typeof test === 'number' ? () => test : test
 
 export class Storylet<Content, Interruption> {
   readonly read: Read<Content, Interruption>
@@ -46,8 +37,13 @@ export class Storylet<Content, Interruption> {
     read: Read<Content, Interruption> | Content,
     test: Test<Content> | number
   ) {
-    this.read = makeRead(read)
-    this.test = makeTest(test)
+    this.read = typeof read === 'function' ? read as Read<Content, Interruption> : ({ state, story, index }) => ({
+      state,
+      story: [...story, read],
+      index: [],
+      request: END
+    })
+    this.test = typeof test === 'number' ? () => test : test
   }
 }
 

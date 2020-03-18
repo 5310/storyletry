@@ -1,4 +1,4 @@
-import { Storylet, Context, Reading, Test, makeTest, END } from './storylet'
+import { Storylet, Context, Reading, Test, END } from './storylet'
 
 type StoryletRandom<Content, Interruption> = {
   weight: number,
@@ -19,7 +19,7 @@ export class StoryletterRandom<Content, Interruption> implements Storylet<Conten
         ? s as StoryletRandom<Content, Interruption>
         : { weight: 1, storylet: s as Storylet<Content, Interruption> }
       )
-    this.test = makeTest(test)
+    this.test = typeof test === 'number' ? () => test : test
   }
 
   read(context: Context<Content>): Reading<Content, Interruption> {

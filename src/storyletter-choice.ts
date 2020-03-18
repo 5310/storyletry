@@ -1,4 +1,4 @@
-import { Storylet, Context, Reading, Test, makeTest, END } from './storylet'
+import { Storylet, Context, Reading, Test, END } from './storylet'
 
 export type StoryletChoice<Content, Interruption> = {
   slug: (context: Context<Content>) => Content,
@@ -12,7 +12,7 @@ export class StoryletterChoice<Content, Interruption> implements Storylet<Conten
 
   constructor(story: StoryletChoice<Content, Interruption>[], test: Test<Content> | number) {
     this.story = story
-    this.test = makeTest(test)
+    this.test = typeof test === 'number' ? () => test : test
   }
 
   read(context: Context<Content>): Reading<Content, Interruption> {
