@@ -1,4 +1,4 @@
-import { Storylet, Context, Reading, Test, END } from './storylet'
+import { Storylet, Context, Reading, Test, END } from '@scio/storyletry-storylet'
 
 type StoryletRandom<Content, Interruption> = {
   weight: number,
@@ -85,6 +85,14 @@ export class StoryletterRandom<Content, Interruption> implements Storylet<Conten
       }
 
     }
+
+    return {
+      state: context.state,
+      story: context.story,
+      index: [],
+      request: END,
+    }
+
   }
 
 }

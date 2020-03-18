@@ -1,4 +1,4 @@
-import { PRNG } from './prng'
+import { PRNG } from '@scio/storyletry-prng'
 
 export type Context<Content> = {
   readonly prng: PRNG,

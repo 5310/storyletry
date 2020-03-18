@@ -1,5 +1,5 @@
 {
-  "name": "storyletter-sequence",
+  "name": "@scio/storyletter-choice",
   "version": "0.1.0",
   "scripts": {
     "lint": "npx tslint -p .",
@@ -32,6 +32,6 @@
     "typescript-tslint-plugin": "^0.5.5"
   },
   "dependencies": {
-    "storyletry-storylet": "^0.1.0"
+    "@scio/storyletry-storylet": "^0.1.0"
   }
 }

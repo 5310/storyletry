@@ -1,5 +1,5 @@
 {
-  "name": "storyletry-prng",
+  "name": "@scio/storyletter-random",
   "version": "0.1.0",
   "scripts": {
     "lint": "npx tslint -p .",
@@ -15,6 +15,9 @@
       ],
       [
         "@pika/plugin-build-web"
+      ],
+      [
+        "@pika/plugin-bundle-web"
       ]
     ]
   },
@@ -29,6 +32,6 @@
     "typescript-tslint-plugin": "^0.5.5"
   },
   "dependencies": {
-    "prando": "^5.1.2"
+    "@scio/storyletry-storylet": "^0.1.0"
   }
 }

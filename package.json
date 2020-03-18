@@ -5,10 +5,10 @@
     "version": "lerna version",
     "build": "lerna run build",
     "publish": "lerna publish from-package --contents pkg",
-    "nuke": "lerna exec \"rm -f package-lock.json npm-shrinkwrap.json\" && lerna clean --yes && lerna bootstrap && lerna exec --stream -- \"test -f package-lock.json || npm install --package-lock-only\""
+    "reset": "lerna exec \"rm -f package-lock.json npm-shrinkwrap.json\" && lerna clean --yes && lerna bootstrap --contents pkg && lerna exec --stream -- \"test -f package-lock.json || npm install --package-lock-only\"",
+    "postinstall": "npm run reset && npm run build"
   },
   "devDependencies": {
     "lerna": "^3.20.2"
-  },
-  "dependencies": {}
+  }
 }

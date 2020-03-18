@@ -1,4 +1,4 @@
-import { Storylet, Context, Reading, Test, END } from './storylet'
+import { Storylet, Context, Reading, Test, END } from '@scio/storyletry-storylet'
 
 export class StoryletterSequence<Content, Interruption> implements Storylet<Content, Interruption> {
 
@@ -66,6 +66,14 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
       }
 
     }
+
+    return {
+      state: context.state,
+      story: context.story,
+      index: [],
+      request: END,
+    }
+
   }
 
 }

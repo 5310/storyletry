@@ -1,4 +1,4 @@
-import { Storylet, Context, Reading, Test, END } from './storylet'
+import { Storylet, Context, Reading, Test, END } from '@scio/storyletry-storylet'
 
 export type StoryletChoice<Content, Interruption> = {
   slug: (context: Context<Content>) => Content,
@@ -62,6 +62,14 @@ export class StoryletterChoice<Content, Interruption> implements Storylet<Conten
       }
 
     }
+
+    return {
+      state: context.state,
+      story: context.story,
+      index: [],
+      request: END,
+    }
+
   }
 
 }
