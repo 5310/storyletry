@@ -1,5 +1,5 @@
 {
-  "name": "@scio/storyletter-choice",
+  "name": "@scio/storyletry-storyletter-choice",
   "version": "0.1.0",
   "scripts": {
     "lint": "npx tslint -p .",
