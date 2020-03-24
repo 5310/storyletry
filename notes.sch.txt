@@ -55,7 +55,12 @@
   
   ?*` storyletry
     This is the module collecting the essentials to get started with storyletry; @scio/storyletry
-    ? collate module
+    ?90 collate module
+    ?80 factory functions
+      ? prng
+      ? storylet
+      ? storyletter-*
+      ? storyteller-*
     ? tests
     ? docs
     ? readme
