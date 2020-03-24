@@ -40,7 +40,7 @@
     ? docs
     ? readme
 
-  ?*` storyteller-console
+  ?90*` storyteller-console
     ? implementation
       ? figure out how to do input in the browser
         ? perhaps a console emulator with a readline implementation
@@ -55,12 +55,13 @@
   
   ?*` storyletry
     This is the module collecting the essentials to get started with storyletry; @scio/storyletry
-    ?90 collate module
-    ?80 factory functions
-      ? prng
-      ? storylet
-      ? storyletter-*
+    ?89 collate module
+    ?78 factory functions
+      ! prng
+      ! storylet
+      ! storyletter-*
       ? storyteller-*
+      ? string template tag
     ? tests
     ? docs
     ? readme
