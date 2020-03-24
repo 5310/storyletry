@@ -3,6 +3,7 @@ import {
   END,
   Read,
   Test,
+  Slug,
   Storylet,
 } from '@scio/storyletry-storylet'
 import {
@@ -29,9 +30,9 @@ export const read = <Content, Interruption>(r: Read<Content, Interruption> | Con
       request: END
     })
 
-export const slug = <Content, Interruption>(s: (context: Context<Content>) => Content | Content): ((context: Context<Content>) => Content) =>
+export const slug = <Content, Interruption>(s: Slug<Content> | Content): Slug<Content> =>
   typeof s === 'function'
-    ? s as (context: Context<Content>) => Content
+    ? s as Slug<Content>
     : (context: Context<Content>) => s
 
 export const story = <Content, Interruption>(

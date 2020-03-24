@@ -1,7 +1,7 @@
-import { Storylet, Context, Reading, Test, END } from '@scio/storyletry-storylet'
+import { Storylet, Context, Reading, Test, Slug, END } from '@scio/storyletry-storylet'
 
 export type StoryletChoice<Content, Interruption> = {
-  slug: (context: Context<Content>) => Content,
+  slug: Slug<Content>,
   storylet: Storylet<Content, Interruption>,
 }
 

@@ -30,6 +30,8 @@ export type Read<Content, Interruption> = (context: Context<Content>) => Reading
 
 export type Test<Content> = (context: Context<Content>) => number
 
+export type Slug<Content> = (context: Context<Content>) => Content
+
 export class Storylet<Content, Interruption> {
   readonly read: Read<Content, Interruption>
   readonly test: Test<Content>
