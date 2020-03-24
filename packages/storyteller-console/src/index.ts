@@ -1,3 +1,5 @@
+import produce from 'immer'
+
 import {
   WeightedSample,
   PRNG,

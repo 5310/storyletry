@@ -36,6 +36,7 @@
     "@scio/storyletry-storylet": "^0.1.0",
     "@scio/storyletry-storyletter-choice": "^0.1.0",
     "@scio/storyletry-storyletter-random": "^0.1.0",
-    "@scio/storyletry-storyletter-sequence": "^0.1.0"
+    "@scio/storyletry-storyletter-sequence": "^0.1.0",
+    "immer": "^6.0.2"
   }
 }
