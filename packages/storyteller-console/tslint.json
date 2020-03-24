@@ -1,0 +1,22 @@
+{
+  "extends": "tslint:latest",
+  "rules": {
+    "semicolon": [
+      true,
+      "never"
+    ],
+    "no-consecutive-blank-lines": true,
+    "quotemark": [
+      true,
+      "single",
+      "jsx-double"
+    ],
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore",
+      "allow-trailing-underscore"
+    ]
+  }
+}
