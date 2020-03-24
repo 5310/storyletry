@@ -26,4 +26,6 @@ export {
 export {
   StoryletterSequence
 } from '@scio/storyletry-storyletter-sequence'
+
 export * as create from './create'
+export default create
