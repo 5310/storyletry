@@ -5,9 +5,9 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
   readonly story: Storylet<Content, Interruption>[]
   readonly test: Test<Content>
 
-  constructor(story: Storylet<Content, Interruption>[], test: Test<Content> | number) {
+  constructor(story: Storylet<Content, Interruption>[], test: Test<Content>) {
     this.story = story
-    this.test = typeof test === 'number' ? () => test : test
+    this.test = test
   }
 
   read(context: Context<Content>): Reading<Content, Interruption> {

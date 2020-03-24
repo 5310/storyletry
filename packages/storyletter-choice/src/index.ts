@@ -10,9 +10,9 @@ export class StoryletterChoice<Content, Interruption> implements Storylet<Conten
   readonly story: StoryletChoice<Content, Interruption>[]
   readonly test: Test<Content>
 
-  constructor(story: StoryletChoice<Content, Interruption>[], test: Test<Content> | number) {
+  constructor(story: StoryletChoice<Content, Interruption>[], test: Test<Content>) {
     this.story = story
-    this.test = typeof test === 'number' ? () => test : test
+    this.test = test
   }
 
   read(context: Context<Content>): Reading<Content, Interruption> {

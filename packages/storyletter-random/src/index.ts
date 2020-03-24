@@ -1,6 +1,6 @@
 import { Storylet, Context, Reading, Test, END } from '@scio/storyletry-storylet'
 
-type StoryletRandom<Content, Interruption> = {
+export type StoryletRandom<Content, Interruption> = {
   weight: number,
   storylet: Storylet<Content, Interruption>,
 }
@@ -10,16 +10,9 @@ export class StoryletterRandom<Content, Interruption> implements Storylet<Conten
   readonly story: StoryletRandom<Content, Interruption>[]
   readonly test: Test<Content>
 
-  constructor(
-    story: (StoryletRandom<Content, Interruption> | Storylet<Content, Interruption>)[],
-    test: Test<Content> | number
-  ) {
+  constructor(story: StoryletRandom<Content, Interruption>[], test: Test<Content>) {
     this.story = story
-      .map(s => 'weight' in s
-        ? s as StoryletRandom<Content, Interruption>
-        : { weight: 1, storylet: s as Storylet<Content, Interruption> }
-      )
-    this.test = typeof test === 'number' ? () => test : test
+    this.test = test
   }
 
   read(context: Context<Content>): Reading<Content, Interruption> {

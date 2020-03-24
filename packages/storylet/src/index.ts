@@ -33,19 +33,9 @@ export type Test<Content> = (context: Context<Content>) => number
 export class Storylet<Content, Interruption> {
   readonly read: Read<Content, Interruption>
   readonly test: Test<Content>
-  constructor(
-    read: Read<Content, Interruption> | Content,
-    test: Test<Content> | number
-  ) {
-    this.read = typeof read === 'function'
-      ? read as Read<Content, Interruption>
-      : ({ state, story }) => ({
-        state,
-        story: [...story, read],
-        index: [],
-        request: END
-      })
-    this.test = typeof test === 'number' ? () => test : test
+  constructor(read: Read<Content, Interruption>, test: Test<Content>) {
+    this.read = read
+    this.test = test
   }
 }
 
