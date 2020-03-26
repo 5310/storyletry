@@ -32,6 +32,7 @@
       decided not to generalize test, "story", and edit into a Storyletter abstract class, _yet_
         "story" will continue to change shape depending on the implementation
         the Edit type is an useful interface, but there's no need to formalize the Storyletter class
+    ? consider making Choices a class to make resolvers easier to write for Storytelers
     ? tests
     ? docs
     ? readme
