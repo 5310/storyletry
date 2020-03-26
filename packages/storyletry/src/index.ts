@@ -13,6 +13,7 @@ export {
   Read,
   Test,
   Slug,
+  Edit,
   Storylet,
 } from '@scio/storyletry-storylet'
 export {

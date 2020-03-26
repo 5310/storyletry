@@ -1,13 +1,19 @@
-import { Storylet, Context, Reading, Test, END } from '@scio/storyletry-storylet'
+import { Storylet, Context, Reading, Test, Edit, END } from '@scio/storyletry-storylet'
 
 export class StoryletterSequence<Content, Interruption> implements Storylet<Content, Interruption> {
 
   readonly story: Storylet<Content, Interruption>[]
   readonly test: Test<Content>
+  readonly edit: Edit<Content, Interruption>
 
-  constructor(story: Storylet<Content, Interruption>[], test: Test<Content>) {
+  constructor(
+    story: Storylet<Content, Interruption>[],
+    test: Test<Content>,
+    edit?: Edit<Content, Interruption>,
+  ) {
     this.story = story
     this.test = test
+    this.edit = edit !== undefined ? edit : (_: Reading<Content, Interruption>) => _
   }
 
   read(context: Context<Content>): Reading<Content, Interruption> {
@@ -17,13 +23,7 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
       const reading = this.story[context.index[0]].read({ ...context, index: context.index.slice(1) })
 
       // if delegate wants to end, recurse
-      if (reading.request === END) return this.read({
-        ...context,
-        state: reading.state,
-        story: [...context.story, ...reading.story],
-        index: [],
-        response: context.index[0]++,
-      })
+      if (reading.request === END) return reading
 
       // if delegate has any other request, bubble
       if (reading.request !== undefined) return {
@@ -31,6 +31,15 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
         story: [...context.story, ...reading.story],
         index: [context.index[0], ...reading.index]
       }
+
+      // if delegate doesn't want anything particular, recurse
+      return this.read({
+        ...context,
+        state: reading.state,
+        story: [...context.story, ...reading.story],
+        index: [],
+        response: context.index[0]++,
+      })
 
     } else { // else, "read" yourself
 

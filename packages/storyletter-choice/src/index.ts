@@ -1,4 +1,4 @@
-import { Storylet, Context, Reading, Test, Slug, END } from '@scio/storyletry-storylet'
+import { Storylet, Context, Reading, Test, Slug, Edit, END } from '@scio/storyletry-storylet'
 
 export type StoryletChoice<Content, Interruption> = {
   slug: Slug<Content>,
@@ -9,26 +9,26 @@ export class StoryletterChoice<Content, Interruption> implements Storylet<Conten
 
   readonly story: StoryletChoice<Content, Interruption>[]
   readonly test: Test<Content>
+  readonly edit: Edit<Content, Interruption>
 
-  constructor(story: StoryletChoice<Content, Interruption>[], test: Test<Content>) {
+  constructor(
+    story: StoryletChoice<Content, Interruption>[],
+    test: Test<Content>,
+    edit?: Edit<Content, Interruption>,
+  ) {
     this.story = story
     this.test = test
+    this.edit = edit !== undefined ? edit : (_: Reading<Content, Interruption>) => _
   }
 
   read(context: Context<Content>): Reading<Content, Interruption> {
 
     if (context.index.length > 0) { // delegate if needed
 
-      const reading = this.story[context.index[0]].storylet.read({ ...context, index: context.index.slice(1) })
+      const reading = this.edit(this.story[context.index[0]].storylet.read({ ...context, index: context.index.slice(1) }))
 
       // if delegate wants to end, recurse
-      if (reading.request === END) return this.read({
-        ...context,
-        state: reading.state,
-        story: [...context.story, ...reading.story],
-        index: [],
-        response: undefined,
-      })
+      if (reading.request === END) return reading
 
       // if delegate has any other request, bubble
       if (reading.request !== undefined) return {
@@ -36,6 +36,15 @@ export class StoryletterChoice<Content, Interruption> implements Storylet<Conten
         story: [...context.story, ...reading.story],
         index: [context.index[0], ...reading.index]
       }
+
+      // if delegate doesn't want anything particular, recurse
+      return this.read({
+        ...context,
+        state: reading.state,
+        story: [...context.story, ...reading.story],
+        index: [],
+        response: undefined,
+      })
 
     } else { // else, "read" yourself
 
