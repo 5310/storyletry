@@ -5,6 +5,8 @@
       ! tooling for Typescrip libraries
       ! how to do monorepo
       ? how to document Typescript types
+    ? decide how to extract storyletters into an abstract class
+      they have a lot of common code, even if the story bit changes constantly and a lot of custom logic is necessary for each implementation
     
   ?*` prng
     ! implementation
@@ -24,18 +26,26 @@
 
   ?*` storyletter-choice
     ! implementation
+    ! end condition
+      now, by default, Choice will only run once
+        unless an author-provided Edit makes it repeat conditionally
+      decided not to generalize test, "story", and edit into a Storyletter abstract class, _yet_
+        "story" will continue to change shape depending on the implementation
+        the Edit type is an useful interface, but there's no need to formalize the Storyletter class
     ? tests
     ? docs
     ? readme
 
   ?*` storyletter-sequence
     ! implementation
+    ~ end condition
     ? tests
     ? docs
     ? readme
 
   ?*` storyletter-random
     ! implementation
+    ! end condition
     ? tests
     ? docs
     ? readme
