@@ -4,6 +4,7 @@ import {
   Read,
   Test,
   Slug,
+  Edit,
   Storylet,
 } from '@scio/storyletry-storylet'
 import {
@@ -54,15 +55,18 @@ export const choiceStory = <Content, Interruption>(
 export const choice = <Content, Interruption>(
   s: StoryletChoice<Content, Interruption>[],
   t: Test<Content> | number,
+  e?: Edit<Content, Interruption> | true,
 ): StoryletterChoice<Content, Interruption> =>
   new StoryletterChoice<Content, Interruption>(
     s.map(z => Array.isArray(z) ? { slug: slug(z[0]), storylet: z[1] } : z),
-    test(t)
+    test(t),
+    typeof e === 'function' ? e : e === true ? reading => ({ ...reading, request: END }) : undefined
   )
 
 export const random = <Content, Interruption>(
   s: (StoryletRandom<Content, Interruption> | Storylet<Content, Interruption>)[],
   t: Test<Content> | number,
+  e?: Edit<Content, Interruption>,
 ): StoryletterRandom<Content, Interruption> =>
   new StoryletterRandom<Content, Interruption>(
     s.map(z => 'weight' in s
@@ -70,10 +74,12 @@ export const random = <Content, Interruption>(
       : { weight: 1, storylet: z as Storylet<Content, Interruption> }
     ),
     test(t),
+    e,
   )
 
 export const sequence = <Content, Interruption>(
   s: Storylet<Content, Interruption>[],
   t: Test<Content> | number,
+  e?: Edit<Content, Interruption>,
 ): StoryletterSequence<Content, Interruption> =>
-  new StoryletterSequence<Content, Interruption>(s, test(t))
+  new StoryletterSequence<Content, Interruption>(s, test(t), e)
