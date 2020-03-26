@@ -53,14 +53,13 @@
   ?90*` storyteller-console
     ? implementation
       ? specific class
-        ? constructor
-        ? choice handler
-        ? question handler
+        ! constructor
+        ! choice handler
+        ! question handler
+        ? immutability
         ? persistence
       ? string template tag
         @ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_templates
-      ? figure out how to do input in the browser
-        ? perhaps a console emulator with a readline implementation
     ? tests
     ? docs
     ? readme

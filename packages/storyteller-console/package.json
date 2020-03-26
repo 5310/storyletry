@@ -37,8 +37,6 @@
     "@scio/storyletry-storyletter-choice": "^0.1.0",
     "@scio/storyletry-storyletter-random": "^0.1.0",
     "@scio/storyletry-storyletter-sequence": "^0.1.0",
-    "@types/terminal-kit": "^1.28.1",
-    "immer": "^6.0.2",
-    "terminal-kit": "^1.35.2"
+    "immer": "^6.0.2"
   }
 }
