@@ -55,12 +55,12 @@ export const choiceStory = <Content, Interruption>(
 export const choice = <Content, Interruption>(
   s: StoryletChoice<Content, Interruption>[],
   t: Test<Content> | number,
-  e?: Edit<Content, Interruption> | true,
+  e?: Edit<Content, Interruption>,
 ): StoryletterChoice<Content, Interruption> =>
   new StoryletterChoice<Content, Interruption>(
     s.map(z => Array.isArray(z) ? { slug: slug(z[0]), storylet: z[1] } : z),
     test(t),
-    typeof e === 'function' ? e : e === true ? reading => ({ ...reading, request: END }) : undefined
+    e,
   )
 
 export const random = <Content, Interruption>(
