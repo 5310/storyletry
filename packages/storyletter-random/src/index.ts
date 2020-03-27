@@ -27,7 +27,7 @@ export class StoryletterRandom<Content, Interruption> implements Storylet<Conten
 
       const reading = this.edit(this.story[context.index[0]].storylet.read({ ...context, index: context.index.slice(1) }))
 
-      // if delegate wants to end, recurse
+      // if delegate wants to end, end
       if (reading.request === END) return reading
 
       // if delegate has any other request, bubble
