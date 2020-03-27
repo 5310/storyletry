@@ -1,6 +1,7 @@
 import {
   Context,
   END,
+  Reading,
   Read,
   Test,
   Slug,
@@ -30,6 +31,13 @@ export const read = <Content, Interruption>(r: Read<Content, Interruption> | Con
       index: [],
       request: END
     })
+
+export const stringReading = (context: Context<string>) => (strings: string[], ...keys: any[]): Reading<string, never> => ({
+  state: context.state,
+  story: [strings.map((s, i) => s + keys[i]).join('')],
+  index: [],
+  request: END,
+})
 
 export const slug = <Content, Interruption>(s: Slug<Content> | Content): Slug<Content> =>
   typeof s === 'function'
