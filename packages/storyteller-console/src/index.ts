@@ -7,8 +7,7 @@ import {
 } from '@scio/storyletry-storylet'
 import * as readline from 'readline'
 
-// tslint:disable-next-line: no-console
-const write = console.log
+const write = (s: string = '') => process.stdout.write(s + '\n')
 
 const rl = readline.createInterface({
   input: process.stdin,
