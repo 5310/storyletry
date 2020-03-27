@@ -1,7 +1,9 @@
 {
   "name": "@scio/storyletry-storyletter-choice",
-  "access": "public",
   "license": "Unlicense",
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "0.1.0",
   "scripts": {
     "lint": "npx tslint -p .",
