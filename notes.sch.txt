@@ -7,11 +7,15 @@
       ? how to document Typescript types
     ? extract storyletters into an abstract class
       they have a lot of common code, even if the story bit changes constantly and a lot of custom logic is necessary for each implementation
+      also, have an optional slug why don't you
       ? plan what and how to abstract
       ? write class
       ? refactor storyletters to extend class
     ?90 write a basic story
       demo using repl.it
+    ? package housekeeping
+      ? learn how to automate readme creation
+      ? tag ALL the things
 
   ?*` prng
     ! implementation
