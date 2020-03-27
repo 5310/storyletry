@@ -5,9 +5,14 @@
       ! tooling for Typescrip libraries
       ! how to do monorepo
       ? how to document Typescript types
-    ? decide how to extract storyletters into an abstract class
+    ? extract storyletters into an abstract class
       they have a lot of common code, even if the story bit changes constantly and a lot of custom logic is necessary for each implementation
-    
+      ? plan what and how to abstract
+      ? write class
+      ? refactor storyletters to extend class
+    ?90 write a basic story
+      demo using repl.it
+
   ?*` prng
     ! implementation
     ? tests
@@ -20,6 +25,7 @@
 
   ?*` storylet
     ! implementation
+    ? consider making Choices a class to make resolvers easier to write for Storytelers
     ? tests
     ? docs
     ? readme
@@ -32,14 +38,13 @@
       decided not to generalize test, "story", and edit into a Storyletter abstract class, _yet_
         "story" will continue to change shape depending on the implementation
         the Edit type is an useful interface, but there's no need to formalize the Storyletter class
-    ? consider making Choices a class to make resolvers easier to write for Storytelers
     ? tests
     ? docs
     ? readme
 
   ?*` storyletter-sequence
     ! implementation
-    ~ end condition
+    ! end condition
     ? tests
     ? docs
     ? readme
@@ -51,28 +56,27 @@
     ? docs
     ? readme
 
-  ?90*` storyteller-console
-    ? implementation
-      ? specific class
-        ! constructor
-        ! choice handler
-        ! question handler
-        ? immutability
-        ? persistence
-      ? string template tag
-        @ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_templates
+  ?*` storyteller-console
+    ! basic implementation
+      ! constructor
+      ! choice handler
+      ! question handler
+    ? advanced implementation
+      ? immutability
+      ? persistence
+      ? undo
     ? tests
     ? docs
     ? readme
   
   ?*` storyletry
     This is the module collecting the essentials to get started with storyletry; @scio/storyletry
-    ?89 collate module
-    ?78 factory functions
+    ! collate module
+    ! factory functions
       ! prng
       ! storylet
       ! storyletter-*
-      ? storyteller-*
+      ! storyteller-*
     ? tests
     ? docs
     ? readme
