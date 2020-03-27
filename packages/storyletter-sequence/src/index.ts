@@ -23,7 +23,14 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
       const reading = this.story[context.index[0]].read({ ...context, index: context.index.slice(1) })
 
       // if delegate wants to end, recurse
-      if (reading.request === END) return reading
+      // unlike most other Storytellers, this one has an explicit end state when the sequence finishes
+      if (reading.request === END) return this.read({
+        ...context,
+        state: reading.state,
+        story: [...context.story, ...reading.story],
+        index: [],
+        response: context.index[0]++,
+      })
 
       // if delegate has any other request, bubble
       if (reading.request !== undefined) return {
@@ -31,15 +38,6 @@ export class StoryletterSequence<Content, Interruption> implements Storylet<Cont
         story: [...context.story, ...reading.story],
         index: [context.index[0], ...reading.index]
       }
-
-      // if delegate doesn't want anything particular, recurse
-      return this.read({
-        ...context,
-        state: reading.state,
-        story: [...context.story, ...reading.story],
-        index: [],
-        response: context.index[0]++,
-      })
 
     } else { // else, "read" yourself
 
