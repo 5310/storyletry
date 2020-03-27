@@ -1,5 +1,7 @@
 {
   "name": "@scio/storyletry-storylet",
+  "access": "public",
+  "license": "Unlicense",
   "version": "0.1.0",
   "scripts": {
     "lint": "npx tslint -p .",

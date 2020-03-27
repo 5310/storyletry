@@ -1,5 +1,7 @@
 {
   "name": "@scio/storyletry-prng",
+  "access": "public",
+  "license": "Unlicense",
   "version": "0.1.0",
   "scripts": {
     "lint": "npx tslint -p .",
@@ -34,13 +36,14 @@
     "@pika/plugin-bundle-web": "^0.9.2",
     "@pika/plugin-ts-standard-pkg": "^0.9.2",
     "@types/jest": "^25.1.4",
-    "pika-plugin-unpkg-field": "^1.1.0",
     "jest": "^25.1.0",
-    "typescript": "^3.8.3",
+    "pika-plugin-unpkg-field": "^1.1.0",
     "ts-jest": "^25.2.1",
+    "typescript": "^3.8.3",
     "typescript-tslint-plugin": "^0.5.5"
   },
   "dependencies": {
     "prando": "^5.1.2"
-  }
+  },
+  "gitHead": "5d878f41960007209b592e15945164acb4413b8c"
 }
