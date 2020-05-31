@@ -4,6 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": "github:5310/storyletry",
   "version": "0.1.0",
   "scripts": {
     "lint": "npx tslint -p .",
@@ -16,12 +17,6 @@
       ],
       [
         "@pika/plugin-build-node"
-      ],
-      [
-        "@pika/plugin-build-web"
-      ],
-      [
-        "@pika/plugin-bundle-web"
       ]
     ]
   },

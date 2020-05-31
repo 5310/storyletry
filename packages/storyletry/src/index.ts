@@ -32,4 +32,3 @@ export {
 } from '@scio/storyletry-storyteller-console'
 
 export * as create from './create'
-export default create

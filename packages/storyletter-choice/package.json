@@ -5,6 +5,7 @@
     "access": "public"
   },
   "version": "0.1.0",
+  "repository": "github:5310/storyletry",
   "scripts": {
     "lint": "npx tslint -p .",
     "build": "npx pika-pack"
